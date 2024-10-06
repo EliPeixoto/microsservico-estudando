@@ -24,9 +24,21 @@ public class ProdutoController {
         return produtoService.buscaProdutoPorId(id);
     }
 
+    @PutMapping("/{idProduto}")
+    public Produto atualizarProduto(@PathVariable Integer idProduto,
+                                    @RequestBody Produto novoProduto){
+        return produtoService.atualizarProduto(idProduto, novoProduto);
+    }
     @PostMapping
     public Produto cadastrarProduto(@RequestBody Produto produto){
         return produtoService.cadastrarProduto(produto);
     }
+
+    @DeleteMapping("/{produtoId}")
+    public void deletaProduto(@PathVariable Integer produtoId){
+         produtoService.deletaProduto(produtoId);
+    }
+
+
 }
 
