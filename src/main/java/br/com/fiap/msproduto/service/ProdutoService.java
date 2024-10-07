@@ -40,6 +40,14 @@ public class ProdutoService {
         }
     }
 
+    public Produto atualizarEstoque(Integer id, int quantidade){
+        Produto produto = produtoRepository.findById(id).orElse(null);
+        if(produto != null){
+            produto.setQuantidade_estoque(produto.getQuantidade_estoque() - quantidade);
+            return produtoRepository.save(produto);
+        }
+        return null;
+    }
 
 
     public void deletaProduto(Integer produtoId) {

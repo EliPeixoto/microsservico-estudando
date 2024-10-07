@@ -34,6 +34,11 @@ public class ProdutoController {
         return produtoService.cadastrarProduto(produto);
     }
 
+    @PutMapping("/atualizar/estoque/{id}/{quantidade}")
+    public Produto atualizaEstoque(@PathVariable Integer id, @PathVariable int quantidade){
+        return produtoService.atualizarEstoque(id, quantidade);
+    }
+
     @DeleteMapping("/{produtoId}")
     public void deletaProduto(@PathVariable Integer produtoId){
          produtoService.deletaProduto(produtoId);
