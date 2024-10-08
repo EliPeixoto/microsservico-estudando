@@ -7,9 +7,9 @@ import org.mockito.Mockito;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 public class ProdutoServiceTest {
@@ -44,6 +44,33 @@ public class ProdutoServiceTest {
         assertEquals(2, listaProduto.size());
         assertEquals("Produto 1", listaProduto.get(0).getNome());
         assertEquals("Produto 2", listaProduto.get(1).getNome());
+
+    }
+    @Test
+    void deveBuscarProdutoPorId(){
+        //criando mock do produtoRepository
+        ProdutoRepository produtoRepository = Mockito.mock(ProdutoRepository.class);
+
+        // Criando a instância do serviço e injetando o mock
+        ProdutoService produtoService = new ProdutoService(produtoRepository);
+
+        // Criando um produto para simular a busca
+        Produto produto = new Produto();
+        produto.setId(1);
+        produto.setNome("Produto Teste");
+        produto.setDescricao("Descricao Teste");
+        produto.setQuantidade_estoque(10);
+        produto.setPreco(100.00);
+
+        // Simulando o comportamento do repository ao buscar o produto por ID
+        int produtoId = 1;
+        when(produtoRepository.findById(produtoId)).thenReturn(Optional.of(produto));
+        Optional<Produto> produtoEncontrado = produtoService.buscaProdutoPorId(produtoId);
+
+        assertNotNull(produtoEncontrado);
+        assertTrue(produtoEncontrado.isPresent());
+        assertEquals(produto.getId(), produtoEncontrado.get().getId());
+        assertEquals("Produto Teste", produtoEncontrado.get().getNome());
 
     }
 }
