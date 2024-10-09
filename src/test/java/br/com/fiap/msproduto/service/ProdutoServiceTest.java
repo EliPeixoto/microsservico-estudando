@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class ProdutoServiceTest {
@@ -95,6 +98,43 @@ public class ProdutoServiceTest {
         assertEquals(produto.getDescricao(), produtoCadastrado.getDescricao());
         assertEquals(produto.getPreco(), produtoCadastrado.getPreco());
         assertEquals(produto.getQuantidade_estoque(), produtoCadastrado.getQuantidade_estoque());
+
+
+    }
+    @Test
+    void deveAtualizarProduto(){
+
+        ProdutoRepository produtoRepository = Mockito.mock(ProdutoRepository.class);
+        ProdutoService produtoService = new ProdutoService(produtoRepository);
+
+        Produto produto = new Produto();
+        produto.setDescricao("Descricao");
+        produto.setId(1);
+        produto.setNome("Nome");
+        produto.setPreco(10.0d);
+        produto.setQuantidade_estoque(1);
+        Optional<Produto> resultado = Optional.of(produto);
+
+        Produto produto2 = new Produto();
+        produto2.setDescricao("Descricao");
+        produto2.setId(1);
+        produto2.setNome("Nome");
+        produto2.setPreco(10.0d);
+        produto2.setQuantidade_estoque(1);
+        when(produtoRepository.save(Mockito.any())).thenReturn(produto2);
+        when(produtoRepository.findById(Mockito.<Integer>any())).thenReturn(resultado);
+
+        Produto novoProduto = new Produto();
+        novoProduto.setDescricao("Descricao");
+        novoProduto.setId(1);
+        novoProduto.setNome("Nome");
+        novoProduto.setPreco(10.0d);
+        novoProduto.setQuantidade_estoque(1);
+
+        Produto atualizarProdutoResultado = produtoService.atualizarProduto(1, novoProduto);
+        verify(produtoRepository).findById(eq(1));
+        verify(produtoRepository).save(isA(Produto.class));
+        assertSame(produto2, atualizarProdutoResultado);
 
 
     }
