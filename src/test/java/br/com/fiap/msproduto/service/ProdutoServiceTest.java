@@ -73,4 +73,29 @@ public class ProdutoServiceTest {
         assertEquals("Produto Teste", produtoEncontrado.get().getNome());
 
     }
+
+    @Test
+    void deveCadastrarProduto(){
+        ProdutoRepository produtoRepository = Mockito.mock(ProdutoRepository.class);
+        ProdutoService produtoService = new ProdutoService(produtoRepository);
+
+        Produto produto = new Produto();
+        produto.setId(1);
+        produto.setNome("Produto Teste");
+        produto.setDescricao("Descricao Teste");
+        produto.setQuantidade_estoque(10);
+        produto.setPreco(100.00);
+
+        when(produtoRepository.save(produto)).thenReturn(produto);
+        Produto produtoCadastrado = produtoService.cadastrarProduto(produto);
+
+        assertNotNull(produtoCadastrado);
+        assertEquals(produto.getId(),  produtoCadastrado.getId());
+        assertEquals(produto.getNome(), produtoCadastrado.getNome());
+        assertEquals(produto.getDescricao(), produtoCadastrado.getDescricao());
+        assertEquals(produto.getPreco(), produtoCadastrado.getPreco());
+        assertEquals(produto.getQuantidade_estoque(), produtoCadastrado.getQuantidade_estoque());
+
+
+    }
 }
