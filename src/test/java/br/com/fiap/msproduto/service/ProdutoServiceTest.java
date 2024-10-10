@@ -2,6 +2,7 @@ package br.com.fiap.msproduto.service;
 
 import br.com.fiap.msproduto.model.Produto;
 import br.com.fiap.msproduto.reporitory.ProdutoRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -18,7 +19,8 @@ import static org.mockito.Mockito.when;
 public class ProdutoServiceTest {
 
     @Test
-    void deveListarProdutos(){
+    @DisplayName("Deve trazer a lista dos produtos cadastrados")
+    void listarProdutos(){
         //criando mock do produtoRepository
         ProdutoRepository produtoRepository = Mockito.mock(ProdutoRepository.class);
 
@@ -50,6 +52,7 @@ public class ProdutoServiceTest {
 
     }
     @Test
+    @DisplayName("Deve trazer um produto ao realizar a busca por Id")
     void deveBuscarProdutoPorId(){
         //criando mock do produtoRepository
         ProdutoRepository produtoRepository = Mockito.mock(ProdutoRepository.class);
@@ -78,7 +81,8 @@ public class ProdutoServiceTest {
     }
 
     @Test
-    void deveCadastrarProduto(){
+    @DisplayName("Deve cadastrar um produto")
+    void cadastrarProduto(){
         ProdutoRepository produtoRepository = Mockito.mock(ProdutoRepository.class);
         ProdutoService produtoService = new ProdutoService(produtoRepository);
 
@@ -102,7 +106,8 @@ public class ProdutoServiceTest {
 
     }
     @Test
-    void deveAtualizarProduto(){
+    @DisplayName("Deve atualizar um produto")
+    void atualizarProduto(){
 
         ProdutoRepository produtoRepository = Mockito.mock(ProdutoRepository.class);
         ProdutoService produtoService = new ProdutoService(produtoRepository);
